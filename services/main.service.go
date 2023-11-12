@@ -5,7 +5,7 @@ import (
 	"sql-playground/db"
 )
 
-type World struct {
+type City struct {
 	ID          int
 	Name        string
 	CountryCode string
@@ -13,12 +13,14 @@ type World struct {
 	Population  int
 }
 
-func GetAll() []World {
-	var worlds []World
+func GetAllCities(page int) []City {
+	var cities []City
 
-	SQL := "SELECT * FROM city LIMIT 10"
+	SQL := "SELECT * FROM city LIMIT ? OFFSET ?;"
+	pageSize := 100
+	offset := (page - 1) * pageSize
 
-	rows, err := db.Raw.Query(SQL)
+	rows, err := db.Raw.Query(SQL, pageSize, offset)
 	if err != nil {
 		log.Println(err)
 		return nil
@@ -26,21 +28,21 @@ func GetAll() []World {
 	defer rows.Close()
 
 	for rows.Next() {
-		var world World
+		var city City
 
 		if err := rows.Scan(
-			&world.ID,
-			&world.Name,
-			&world.CountryCode,
-			&world.District,
-			&world.Population,
+			&city.ID,
+			&city.Name,
+			&city.CountryCode,
+			&city.District,
+			&city.Population,
 		); err != nil {
 			log.Println(err)
 			return nil
 		}
 
-		worlds = append(worlds, world)
+		cities = append(cities, city)
 	}
 
-	return worlds
+	return cities
 }

@@ -7,9 +7,11 @@ import (
 )
 
 func InitWebHandler(server *fiber.App) {
-	data := services.GetAll()
+	data := services.GetAllCities(1)
 
 	server.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON(data)
+		return c.Render("index", fiber.Map{
+			"Data": data,
+		})
 	})
 }

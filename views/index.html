@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>SQL Playground</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 4px 20px;
+        }
+
+        main {
+            margin: 24px 0px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #load-more-btn {
+            margin: 24px;
+        }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>City of the World!</h1>
+            <table id="item-list">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>CountryCode</th>
+                    <th>District</th>
+                    <th>Population</th>
+                </tr>
+                {{ range .Data }}
+                <tr>
+                    <td>{{ .ID }}</td>
+                    <td>{{ .Name }}</td>
+                    <td>{{ .CountryCode }}</td>
+                    <td>{{ .District }}</td>
+                    <td>{{ .Population }}</td>
+                </tr>
+                {{ end }}
+            </table>
+
+            <!-- Load more button -->
+            <button id="load-more-btn">
+                Load More
+            </button>
+        </main>
+
+        <script src="index.js"></script>
+    </body>
+</html>
