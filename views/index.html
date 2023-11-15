@@ -4,32 +4,37 @@
         <title>SQL Playground</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 4px 20px;
-        }
-
-        main {
-            margin: 24px 0px;
-            width: 100%;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        #load-more-btn {
-            margin: 24px;
-        }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/index.css">
+        <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
     </head>
     <body>
+        <div class="sum-wrapper">
+            <div>
+                <h4>Total Cities</h4>
+                <p hx-get="/api/get-total-city" hx-trigger="revealed"></p>
+            </div>
+
+            <div>
+                <h4>Total Population</h4>
+                <p hx-get="/api/get-total-population" hx-trigger="revealed"></p>
+            </div>
+
+            <div>
+                <h4>Total Countries</h4>
+                <p hx-get="/api/get-total-country" hx-trigger="revealed"></p>
+            </div>
+
+            <div>
+                <h4>Total District</h4>
+                <p hx-get="/api/get-total-district" hx-trigger="revealed"></p>
+            </div>
+        </div>
+
         <main>
-            <h1>City of the World!</h1>
+            <div>
+                <h1>City of the World!</h1>
+            </div>
+
             <table id="item-list">
                 <tr>
                     <th>ID</th>
