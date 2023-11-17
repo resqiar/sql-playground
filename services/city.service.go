@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"log"
 	"sql-playground/db"
 )
@@ -12,6 +13,10 @@ type City struct {
 	District    string
 	Population  int
 }
+
+var (
+	allowedColumns = [5]string{"id", "name", "countrycode", "district", "population"}
+)
 
 func GetAllCities(page int) []City {
 	var cities []City
@@ -83,26 +88,18 @@ func GetSumPopulation() (int, error) {
 	return count, nil
 }
 
-func GetTotalCountry() (int, error) {
-	SQL := "SELECT COUNT(DISTINCT countrycode) FROM city;"
-
-	row := db.Raw.QueryRow(SQL)
-	if row.Err() != nil {
-		log.Println(row.Err())
-		return 0, row.Err()
+func GetTotal(input string) (int, error) {
+	var validInput = false
+	for _, v := range allowedColumns {
+		if v == input {
+			validInput = true
+		}
+	}
+	if !validInput {
+		return 0, nil
 	}
 
-	var count int
-	if err := row.Scan(&count); err != nil {
-		log.Println(row.Err())
-		return 0, row.Err()
-	}
-
-	return count, nil
-}
-
-func GetTotalDistrict() (int, error) {
-	SQL := "SELECT COUNT(DISTINCT district) FROM city;"
+	SQL := fmt.Sprintf("SELECT COUNT(DISTINCT %s) FROM city;", input)
 
 	row := db.Raw.QueryRow(SQL)
 	if row.Err() != nil {

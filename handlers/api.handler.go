@@ -35,12 +35,12 @@ func InitAPIHandler(server *fiber.App) {
 		if err != nil {
 			return c.SendString("0")
 		}
+
 		return c.SendString(formatter.Sprint(data))
 	})
 
 	api.Get("/get-total-population", func(c *fiber.Ctx) error {
 		data, err := services.GetSumPopulation()
-
 		if err != nil {
 			return c.SendString("0")
 		}
@@ -49,8 +49,7 @@ func InitAPIHandler(server *fiber.App) {
 	})
 
 	api.Get("/get-total-country", func(c *fiber.Ctx) error {
-		data, err := services.GetTotalCountry()
-
+		data, err := services.GetTotal("countrycode")
 		if err != nil {
 			return c.SendString("0")
 		}
@@ -59,8 +58,7 @@ func InitAPIHandler(server *fiber.App) {
 	})
 
 	api.Get("/get-total-district", func(c *fiber.Ctx) error {
-		data, err := services.GetTotalDistrict()
-
+		data, err := services.GetTotal("district")
 		if err != nil {
 			return c.SendString("0")
 		}
