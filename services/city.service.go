@@ -115,3 +115,34 @@ func GetTotal(input string) (int, error) {
 
 	return count, nil
 }
+
+func Filter(id, name string, country string, district string) []City {
+	SQL := "SELECT * FROM city WHERE id LIKE ? AND name LIKE ? AND countrycode LIKE ? AND district LIKE ? LIMIT 100;"
+
+	var cities []City
+	rows, err := db.Raw.Query(SQL, id, name, country, district)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var city City
+
+		if err := rows.Scan(
+			&city.ID,
+			&city.Name,
+			&city.CountryCode,
+			&city.District,
+			&city.Population,
+		); err != nil {
+			log.Println(err)
+			return nil
+		}
+
+		cities = append(cities, city)
+	}
+
+	return cities
+}

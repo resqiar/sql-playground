@@ -21,6 +21,9 @@ main {
 
 .sum-wrapper {
     display: flex;
+    width: 100%;
+    justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 24px;
+    background: #3d3d3d3d;
 }

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"sql-playground/services"
 	"strconv"
 
@@ -64,5 +65,15 @@ func InitAPIHandler(server *fiber.App) {
 		}
 
 		return c.SendString(formatter.Sprint(data))
+	})
+
+	api.Get("/filter", func(c *fiber.Ctx) error {
+		id := fmt.Sprintf("%%%s%%", c.Query("id", ""))
+		name := fmt.Sprintf("%%%s%%", c.Query("name", ""))
+		country := fmt.Sprintf("%%%s%%", c.Query("country", ""))
+		district := fmt.Sprintf("%%%s%%", c.Query("district", ""))
+
+		data := services.Filter(id, name, country, district)
+		return c.JSON(data)
 	})
 }
