@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+td {
+    border: 1px solid black;
+}
+
+th {
+    border: 1.5px solid black;
+}
+
+th, td {
+    padding: 4px 20px;
+}

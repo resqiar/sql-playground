@@ -4,54 +4,56 @@
         <title>SQL Playground</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="/index.css">
+        <link rel="stylesheet" type="text/css" href="/output.css">
         <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="sum-wrapper">
-            <div>
-                <h4>Total Cities</h4>
-                <p hx-get="/api/get-total-city" hx-trigger="revealed"></p>
-            </div>
-
-            <div>
-                <h4>Total Population</h4>
-                <p hx-get="/api/get-total-population" hx-trigger="revealed"></p>
-            </div>
-
-            <div>
-                <h4>Total Countries</h4>
-                <p hx-get="/api/get-total-country" hx-trigger="revealed"></p>
-            </div>
-
-            <div>
-                <h4>Total District</h4>
-                <p hx-get="/api/get-total-district" hx-trigger="revealed"></p>
-            </div>
-        </div>
-
-        <div class="sum-wrapper">
-            <div>
-                <h4>Filter Data</h4>
+        <div class="flex flex-col py-12 items-center justify-center bg-[#3d3d3d3d]">
+            <div class="flex items-center gap-12">
+                <div>
+                    <h4 class="font-bold">Total Cities</h4>
+                    <p hx-get="/api/get-total-city" hx-trigger="revealed"></p>
+                </div>
 
                 <div>
-                    <input type="text" name="filter_id" value="" placeholder="ID" />
-                    <input type="text" name="filter_name" value="" placeholder="Name" />
-                    <input type="text" name="filter_countrycode" value="" placeholder="CountryCode" />
-                    <input type="text" name="filter_district" value="" placeholder="District" />
+                    <h4 class="font-bold">Total Population</h4>
+                    <p hx-get="/api/get-total-population" hx-trigger="revealed"></p>
+                </div>
 
-                    <button id="filter-btn" type="submit">Filter</button>
-                    <button id="clear-filter-btn" type="submit">Clear</button>
+                <div>
+                    <h4 class="font-bold">Total Countries</h4>
+                    <p hx-get="/api/get-total-country" hx-trigger="revealed"></p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold">Total District</h4>
+                    <p hx-get="/api/get-total-district" hx-trigger="revealed"></p>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <div class="flex gap-2">
+                    <div>
+                        <input type="text" name="filter_id" value="" placeholder="ID" />
+                        <input type="text" name="filter_name" value="" placeholder="Name" />
+                        <input type="text" name="filter_countrycode" value="" placeholder="CountryCode" />
+                        <input type="text" name="filter_district" value="" placeholder="District" />
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button id="filter-btn" type="submit">Filter</button>
+                        <button id="clear-filter-btn" type="submit">Clear</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <main>
+        <main class="flex flex-col items-center justify-center gap-12 my-12">
             <div>
-                <h1>City of the World!</h1>
+                <h1 class="font-bold text-3xl">City of the World!</h1>
             </div>
 
-            <table id="item-list">
+            <table id="item-list" class="border border-black">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
