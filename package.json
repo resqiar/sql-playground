@@ -10,6 +10,6 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "dev": "bun tailwindcss -i ./views/static/input.css -o ./views/static/output.css --watch",
+    "dev": "bun tailwindcss -i ./views/static/input.css -o ./views/static/output.css --watch"
   }
 }
