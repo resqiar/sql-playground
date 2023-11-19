@@ -14,6 +14,12 @@ type City struct {
 	Population  int
 }
 
+type CountryCapital struct {
+	Code    string
+	Name    string
+	Capital string
+}
+
 var (
 	allowedColumns = [5]string{"id", "name", "countrycode", "district", "population"}
 )
@@ -145,4 +151,70 @@ func Filter(id, name string, country string, district string) []City {
 	}
 
 	return cities
+}
+
+func GetAllCountryCapital(page int) []CountryCapital {
+	var countries []CountryCapital
+
+	SQL := "SELECT country.code, country.name, city.name AS capital FROM country INNER JOIN city ON country.capital = city.id LIMIT ? OFFSET ?;"
+	pageSize := 100
+	offset := (page - 1) * pageSize
+
+	rows, err := db.Raw.Query(SQL, pageSize, offset)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var country CountryCapital
+
+		if err := rows.Scan(
+			&country.Code,
+			&country.Name,
+			&country.Capital,
+		); err != nil {
+			log.Println(err)
+			return nil
+		}
+
+		countries = append(countries, country)
+	}
+
+	return countries
+}
+
+func FilterCountry(code string, name string, capital string) []CountryCapital {
+	SQL := `
+		SELECT country.code, country.name, city.name AS capital
+		FROM country INNER JOIN city ON country.capital = city.id
+		WHERE country.code LIKE ? AND country.name LIKE ? AND city.name LIKE ?
+		LIMIT 100;
+	`
+
+	var countries []CountryCapital
+	rows, err := db.Raw.Query(SQL, code, name, capital)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var country CountryCapital
+
+		if err := rows.Scan(
+			&country.Code,
+			&country.Name,
+			&country.Capital,
+		); err != nil {
+			log.Println(err)
+			return nil
+		}
+
+		countries = append(countries, country)
+	}
+
+	return countries
 }

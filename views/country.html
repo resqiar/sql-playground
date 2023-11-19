@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>SQL Playground</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/output.css">
+        <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="flex flex-col py-12 items-center justify-center bg-[#3d3d3d3d]">
+            <div class="flex items-center gap-12">
+                <div>
+                    <h4 class="font-bold">Total Cities</h4>
+                    <p hx-get="/api/get-total-city" hx-trigger="revealed"></p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold">Total Population</h4>
+                    <p hx-get="/api/get-total-population" hx-trigger="revealed"></p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold">Total Countries</h4>
+                    <p hx-get="/api/get-total-country" hx-trigger="revealed"></p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold">Total District</h4>
+                    <p hx-get="/api/get-total-district" hx-trigger="revealed"></p>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <div class="flex gap-2">
+                    <div>
+                        <input type="text" name="filter_code" value="" placeholder="Code" />
+                        <input type="text" name="filter_name" value="" placeholder="Name" />
+                        <input type="text" name="filter_capital" value="" placeholder="Capital" />
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button id="filter-btn" type="submit">Filter</button>
+                        <button id="clear-filter-btn" type="submit">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="flex flex-col items-center justify-center gap-12 my-12">
+            <div>
+                <h1 class="font-bold text-3xl">Countries of the World!</h1>
+            </div>
+
+            <table id="item-list" class="border border-black">
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Capital</th>
+                </tr>
+                {{ range .Data }}
+                <tr>
+                    <td>{{ .Code }}</td>
+                    <td>{{ .Name }}</td>
+                    <td>{{ .Capital }}</td>
+                </tr>
+                {{ end }}
+            </table>
+
+            <!-- Load more button -->
+            <button id="load-more-btn">
+                Load More
+            </button>
+        </main>
+
+        <script src="country.js"></script>
+    </body>
+</html>

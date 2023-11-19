@@ -76,4 +76,27 @@ func InitAPIHandler(server *fiber.App) {
 		data := services.Filter(id, name, country, district)
 		return c.JSON(data)
 	})
+
+	api.Get("/country-capital", func(c *fiber.Ctx) error {
+		rawPage := c.Query("page", "1")
+
+		page, err := strconv.Atoi(rawPage)
+		if err != nil {
+			return c.JSON(fiber.Map{
+				"Error": err,
+			})
+		}
+
+		data := services.GetAllCountryCapital(page)
+		return c.JSON(data)
+	})
+
+	api.Get("/filter-country", func(c *fiber.Ctx) error {
+		code := fmt.Sprintf("%%%s%%", c.Query("code", ""))
+		name := fmt.Sprintf("%%%s%%", c.Query("name", ""))
+		capital := fmt.Sprintf("%%%s%%", c.Query("capital", ""))
+
+		data := services.FilterCountry(code, name, capital)
+		return c.JSON(data)
+	})
 }
